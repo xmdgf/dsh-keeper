@@ -77,7 +77,10 @@ export function apply(ctx, config = {}) {
 
   function formatWakeMessage(gaps) {
     const lines = gaps.map(g => `· [${g.severity}] ${g.what}${g.hint ? ` → ${g.hint}` : ''}`)
-    return `[守夜人] 发现 ${gaps.length} 件该做没做的事：\n${lines.join('\n')}`
+    // 带上看局面的时刻：唤醒可能要排队，收到时局面可能已经变了。
+    // 我自己就被一条「2 个科技槽空着」吵过，等我看到时早补满了。
+    const hh = new Date().toTimeString().slice(0, 5)
+    return `[守夜人] ${hh} 发现 ${gaps.length} 件该做没做的事：\n${lines.join('\n')}\n（如果局面已经变了，回一句「过了」就行）`
   }
 
   /**
