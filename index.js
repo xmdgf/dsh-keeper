@@ -402,9 +402,15 @@ export function apply(ctx, config = {}) {
       const mod = await import('./checkers/video-assets.js')
       return mod.default
     },
+    'stellaris-save': async () => {
+      const mod = await import('./checkers/stellaris-save.js')
+      return mod.default
+    },
   }
 
-  const builtinIds = Array.isArray(config.builtins) ? config.builtins : ['stellaris', 'think-backlog', 'video-assets']
+  const builtinIds = Array.isArray(config.builtins)
+    ? config.builtins
+    : ['stellaris', 'stellaris-save', 'think-backlog', 'video-assets']
   const loaded = []
 
   const builtinLoad = (async () => {
