@@ -1,0 +1,31 @@
+{
+  "name": "dsh-keeper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "守夜人：让 AI 从「响应者」变成「负责人」。按期望状态 vs 实际状态巡检，发现「该做没做」就唤醒。",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "checkers",
+    "README.md",
+    "给别的AI用.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "license": "MIT",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "keeper",
+    "watchdog",
+    "autonomous",
+    "proactive"
+  ]
+}
