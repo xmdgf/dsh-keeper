@@ -340,6 +340,10 @@ export function apply(ctx, config = {}) {
   const tools = {
     keeper_register: async ({ checker }) => register(checker),
     keeper_tick: async () => tick(),
+    keeper_stop: async () => {
+      stop()
+      return { running: false, stopped: true }
+    },
     keeper_status: async () => ({
       running: !!timer,
       degraded,

@@ -19,6 +19,7 @@
  */
 
 import http from 'node:http'
+import { execFile } from 'node:child_process'
 
 const DEFAULTS = {
   eyesUrl: 'http://127.0.0.1:8790',
@@ -27,6 +28,24 @@ const DEFAULTS = {
   sampleMs: 3 * 60 * 1000,
   /** 归零要盯的关键资源（按名字匹配 raw 位置不稳，这里用「第几项」的粗口径 + 数值判断） */
   zeroWarnBelow: 0,
+}
+
+/**
+ * 游戏到底在不在跑。
+ * 不在跑的时候，8790 没起是常态，不该算「该做没做」——之前每 3 分钟报一次 critical，纯噪音。
+ */
+function gameRunning() {
+  return new Promise((resolve) => {
+    execFile(
+      'tasklist',
+      ['/FI', 'IMAGENAME eq stellaris.exe', '/NH'],
+      { timeout: 5000, windowsHide: true },
+      (err, stdout) => {
+        if (err) return resolve(false)
+        resolve(/stellaris\.exe/i.test(stdout || ''))
+      }
+    )
+  })
 }
 
 function getJson(base, path, timeoutMs = 15000) {
@@ -167,6 +186,8 @@ export default function createStellarisChecker(options = {}) {
     // 两边一比，差的就是「该做没做」
     diff: async (exp, act) => {
       const gaps = []
+      // 游戏没在前台跑的时候，「读不到局面」是正常的，不算该做没做
+      if (!(await gameRunning())) return gaps
       if (!act.alive) {
         gaps.push({
           what: 'game_eyes 读不到局面',
