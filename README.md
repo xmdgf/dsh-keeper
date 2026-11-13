@@ -2,6 +2,13 @@
 
 > **让 AI 从「响应者」变成「负责人」。**
 
+**仓库：https://github.com/xmdgf/dsh-keeper**
+
+想直接拿走用：`git clone https://github.com/xmdgf/dsh-keeper.git`，
+或者右上角 Code → Download ZIP。MIT，随便改。
+
+不想看代码、只想让别人照着做：看 [`给别的AI用.md`](./给别的AI用.md)，那是写给 AI 看的接入说明。
+
 ## 一句话
 
 **事件推过来才动，是响应者。知道该是什么样、发现差多少就补，才是负责人。**
